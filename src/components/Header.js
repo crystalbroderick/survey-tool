@@ -10,12 +10,12 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import NscLogo from '../../assets/logo/NscLogo.jpg';
-import { Link } from 'react-router-dom';
+import NscLogo from '../assets/logo/NscLogo.jpg';
+import {Link} from 'react-router-dom'
 
 const pages = ['home', 'surveys', 'templates'];
 
-const NavBar = () => {
+const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleCloseNavMenu = () => {
@@ -69,8 +69,8 @@ const NavBar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">
-                    <Link to={`/${page}`}>{page}</Link>
+                  <Typography textAlign="center" color="secondary">
+                    <Link style={{textDecoration: "none", color: "white"}} to={`/${page}`}>{page}</Link>
                   </Typography>
                 </MenuItem>
               ))}
@@ -82,7 +82,7 @@ const NavBar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            LOGO
+            Survey Tool
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -91,7 +91,7 @@ const NavBar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link to={`/${page}`}>{page}</Link>
+                <Link style={{textDecoration: "none", color: "white"}} to={`/${page}`}>{page}</Link>
               </Button>
             ))}
           </Box>
@@ -108,4 +108,4 @@ const NavBar = () => {
     </AppBar>
   );
 };
-export default NavBar;
+export default Header;
