@@ -1,41 +1,43 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Container from "@mui/material/Container";
 import TemplateCard from "./TemplateCard";
-import { Grid, Box, Paper } from "@mui/material";
-import { styled } from '@mui/material/styles';
+import { Grid, Card } from "@mui/material";
+import TemplateData from "../../api/templates.data";
 
 function Templates() {
-  const templates = [
-    {
-      id: 1,
-      title: "Presenter Survey",
-    },
-    { id: 12, title: "Attendee Survey" },
-  ];
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
+
+  const [templates, setTemplates] = useState([]);
+
+  useEffect(() => {
+    const getTemplates = async () => {
+      const data = await TemplateData.getAllTemplates();
+      setTemplates(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getTemplates();
+  }, []);
 
   return (
-    <Container maxWidth="md">
+    <Container>
       <h1>Templates</h1>
-      <Box sx={{ flexGrow: 1 }}>
+      
         <Grid
           container
-          spacing={{ xs: 2, md: 3 }}
+          spacing={2}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {templates.map((template, index) => (
-            <Grid item xs={2} sm={4} md={4} key={index}>
-              <Item><TemplateCard key={template.id} template={template} /></Item>
+          {templates.map((item) => (
+            <Grid item xs={2} sm={4} md={4} key={item.id} >
+              <Card raised>
+              <TemplateCard
+              title={item.title}
+              type={item.type}
+              id={item.id}
+            />
+              </Card>
             </Grid>
           ))}
         </Grid>
-      </Box>
+      
     </Container>
   );
 }
