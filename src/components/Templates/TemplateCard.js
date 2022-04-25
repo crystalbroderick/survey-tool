@@ -8,14 +8,16 @@ import {
 } from "@mui/material";
 import { Modal } from "@mui/material";
 import Questions from "./Questions";
+import { Link } from "react-router-dom";
+
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "60%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -27,10 +29,10 @@ function TemplateCard({ id, title, type }) {
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {title}
-            
           </Typography>
         </CardContent>
         <CardActions>
+        <Button variant="contained"><Link to={`/templates/${id}`} state={{title:title, type:type}}>Use Template</Link></Button>
           <Button size="small" variant="outlined" onClick={() => setOpen(true)}>
             Preview
           </Button>
@@ -40,15 +42,20 @@ function TemplateCard({ id, title, type }) {
         open={open}
         onClose={() => setOpen(false)}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-describedby="modal-modal-questions"
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {title} Preview
           </Typography>
-          <Typography component={'span'} id="modal-modal-description" sx={{ mt: 2 }}>
-            <Questions template={id}/>
+          <Typography
+            component={"span"}
+            id="modal-modal-questions"
+            sx={{ mt: 2 }}
+          >
+            <Questions template={id} />
           </Typography>
+          <Button variant="contained"><Link to={`/templates/${id}`} state={{title:title, }}>Use Template</Link></Button>
         </Box>
       </Modal>
     </div>
