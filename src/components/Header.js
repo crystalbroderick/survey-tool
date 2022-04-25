@@ -2,7 +2,6 @@ import * as React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Button,
-  Tooltip,
   MenuItem,
   Container,
   Typography,
@@ -110,9 +109,7 @@ const Header = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Log into account">
-              Login
-            </Tooltip>
+
           </Box>
         </Toolbar>
       </Container>
