@@ -8,8 +8,7 @@ import {
 } from "@mui/material";
 import { Modal } from "@mui/material";
 import Questions from "./Questions";
-import { Link } from "react-router-dom";
-
+import { Link as RouterLink } from "react-router-dom";
 const style = {
   position: "absolute",
   top: "50%",
@@ -32,7 +31,14 @@ function TemplateCard({ id, title, type }) {
           </Typography>
         </CardContent>
         <CardActions>
-        <Button variant="contained"><Link to={`/templates/${id}`} state={{title:title, type:type}}>Use Template</Link></Button>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to={`/templates/${id}`}
+            state={{ title: title, type: type }}
+          >
+            Use Template
+          </Button>
           <Button size="small" variant="outlined" onClick={() => setOpen(true)}>
             Preview
           </Button>
@@ -55,7 +61,14 @@ function TemplateCard({ id, title, type }) {
           >
             <Questions template={id} />
           </Typography>
-          <Button variant="contained"><Link to={`/templates/${id}`} state={{title:title, }}>Use Template</Link></Button>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to={`/templates/${id}`}
+            state={{ title: title, type: type }}
+          >
+            Use Template
+          </Button>
         </Box>
       </Modal>
     </div>
