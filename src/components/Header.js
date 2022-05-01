@@ -14,7 +14,7 @@ import {
 import NscLogo from "../assets/logo/NscLogo.jpg";
 import { Link } from "react-router-dom";
 
-const pages = ["Home", "Surveys", "Templates"];
+const pages = ["Home", "Surveys", "Templates", "Login"];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
