@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {useLocation} from 'react-router-dom'
 import Container from "@mui/material/Container";
+import TabNav from '../Shared/tabNav';
 
 function TemplateDesign() {
   const l = useLocation();
@@ -10,7 +11,8 @@ function TemplateDesign() {
   
   return (
     <Container>
-      <h1>{title} Template</h1>
+      <h1>{title}</h1>
+      <TabNav title={title}></TabNav>
     </Container>
   )
 }
