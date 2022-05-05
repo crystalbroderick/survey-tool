@@ -1,5 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+
 
 
 const firebaseConfig = {
@@ -13,6 +16,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
 export default getFirestore();
 
