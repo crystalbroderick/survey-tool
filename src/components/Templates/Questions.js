@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import templatesData from "../../api/templates.data";
 import { List, ListItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import Types from "../Questions/Types";
 
 export default function Questions({ template }) {
   const [questions, setQuestions] = useState([]);
@@ -13,12 +14,15 @@ export default function Questions({ template }) {
         <li key={index}>
           <List>
             <ListItem>{question.title}</ListItem>
-            <ListItem>{question.responseType}</ListItem>
+            <ListItem>
+              <Types type={question.type}></Types>
+            </ListItem>
           </List>
         </li>
       ))}
     </ol>
   );
+
   useEffect(() => {
     const getQuestions = async () => {
       const querySnapshot = await templatesData.getTemplateQuestions(template);
@@ -30,6 +34,7 @@ export default function Questions({ template }) {
       });
     };
     getQuestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
