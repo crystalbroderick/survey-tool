@@ -69,7 +69,7 @@ function App() {
           <Route path="/forgot-password" element={
             <Container
             className="d-flex align-items-center justify-content-center"
-            style={{minHeight: "100vh"}}>
+            style={{minHeight: "50vh"}}>
               <div
               className="w-100"
               style={{ maxWidth: "400px"}}>
