@@ -9,6 +9,8 @@ import { AuthProvider } from "./components/contexts/AuthContext";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login/Login";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import UpdateProfile from "./components/UpdateProfile/UpdateProfile";
 
 function App() {
   return (
@@ -21,11 +23,31 @@ function App() {
           <Route path="Home" element={<Home />} />
           <Route path="Templates" exact element={<TemplatesView />} />
           <Route path="Templates/:id" element={<Template />} />
-          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="/dashboard" element={
+            <Container
+            className="d-flex align-items-center justify-content-center"
+            style={{minHeight: "50vh"}}>
+              <div
+              className="w-100"
+              style={{ maxWidth: "400px"}}>
+                <PrivateRoute><Dashboard /></PrivateRoute>}
+             </div>
+            </Container>}
+           />
+          <Route path="/update-profile" element={
+          <Container
+          className="d-flex align-items-center justify-content-center"
+          style={{minHeight: "50vh"}}>
+            <div
+            className="w-100"
+            style={{ maxWidth: "400px"}}>
+              <PrivateRoute><UpdateProfile /></PrivateRoute>
+           </div>
+          </Container>} />
           <Route path="/signup" element={
           <Container
           className="d-flex align-items-center justify-content-center"
-          style={{minHeight: "100vh"}}>
+          style={{minHeight: "50vh"}}>
             <div
             className="w-100"
             style={{ maxWidth: "400px"}}>
@@ -36,13 +58,25 @@ function App() {
           <Route path="/login" element={
             <Container
             className="d-flex align-items-center justify-content-center"
-            style={{minHeight: "100vh"}}>
+            style={{minHeight: "50vh"}}>
               <div
               className="w-100"
               style={{ maxWidth: "400px"}}>
                 <Login />
              </div>
             </Container>
+          } />
+          <Route path="/forgot-password" element={
+            <Container
+            className="d-flex align-items-center justify-content-center"
+            style={{minHeight: "100vh"}}>
+              <div
+              className="w-100"
+              style={{ maxWidth: "400px"}}>
+                <ForgotPassword />
+             </div>
+            </Container>
+            } />
           } />
           <Route 
             path="*"
