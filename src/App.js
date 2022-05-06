@@ -6,6 +6,9 @@ import { Container } from "@mui/material";
 import Template from "./components/Templates/Template";
 import Signup from "./components/Signup/Signup";
 import { AuthProvider } from "./components/contexts/AuthContext";
+import Dashboard from "./components/Dashboard/Dashboard";
+import Login from "./components/Login/Login";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 function App() {
   return (
@@ -18,7 +21,8 @@ function App() {
           <Route path="Home" element={<Home />} />
           <Route path="Templates" exact element={<TemplatesView />} />
           <Route path="Templates/:id" element={<Template />} />
-          <Route path="signup" element={
+          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="/signup" element={
           <Container
           className="d-flex align-items-center justify-content-center"
           style={{minHeight: "100vh"}}>
@@ -29,7 +33,18 @@ function App() {
            </div>
           </Container>
           } />
-          <Route
+          <Route path="/login" element={
+            <Container
+            className="d-flex align-items-center justify-content-center"
+            style={{minHeight: "100vh"}}>
+              <div
+              className="w-100"
+              style={{ maxWidth: "400px"}}>
+                <Login />
+             </div>
+            </Container>
+          } />
+          <Route 
             path="*"
             element={
               <main style={{ padding: "1rem" }}>
