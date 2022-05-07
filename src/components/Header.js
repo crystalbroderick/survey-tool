@@ -111,7 +111,7 @@ const Header = () => {
           </Box>
 
           <Box 
-          component='button'
+          component='span'
           sx={{ flexGrow: 0 }}>
             <Button
             variant="contained"
