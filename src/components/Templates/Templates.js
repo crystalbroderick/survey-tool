@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import TemplateCard from "./TemplateCard";
 import { Grid, Card } from "@mui/material";
 import TemplateData from "../../api/templates.data";
-
+import { Typography, Box } from "@mui/material";
 function Templates() {
 
   const [templates, setTemplates] = useState([]);
@@ -18,7 +18,8 @@ function Templates() {
 
   return (
     <Container>
-      <h1>Templates</h1>
+      <Box sx={{bgcolor: "background.paper"}}>
+      <Typography variant="h2" m={2} component="h2" py={1} >Templates</Typography>
       
         <Grid
           container
@@ -37,7 +38,7 @@ function Templates() {
             </Grid>
           ))}
         </Grid>
-      
+      </Box>
     </Container>
   );
 }

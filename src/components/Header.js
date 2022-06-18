@@ -98,12 +98,19 @@ const Header = () => {
                 sx={{ my: 2, color: "white", display: "block" }}
                 
               >
-                <Link
-                  style={{ textDecoration: "none", color: "white", variant:"outlined" }}
-                  to={`/${page}`}
-                >
-                  {page}
-                </Link>
+                                {" "}
+                <Typography textAlign="center" color="secondary" variant="h6">
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "white",
+                      variant: "outlined",
+                    }}
+                    to={`/${page}`}
+                  >
+                    {page}
+                  </Link>
+                </Typography>
               </Button>
             ))}
           </Box>
