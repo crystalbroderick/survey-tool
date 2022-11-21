@@ -12,7 +12,7 @@ import {
   AppBar,
 } from "@mui/material";
 import NscLogo from "../assets/logo/NscLogo.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const pages = ["Home", "Surveys", "Templates"];
 
@@ -25,6 +25,8 @@ const Header = () => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
+  const navigate = useNavigate()
 
   return (
     <AppBar position="static">
@@ -108,8 +110,13 @@ const Header = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            Login
+          <Box 
+          component='span'
+          sx={{ flexGrow: 0 }}>
+            <Button
+            variant="contained"
+            onClick={ () => {navigate('/login')}}
+            >Login</Button>
           </Box>
         </Toolbar>
       </Container>
