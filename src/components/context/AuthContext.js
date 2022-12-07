@@ -1,5 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../../firebase.config";
+import db from "../../firebase.config.js";
+import {
+	collection,
+	getDoc,
+	addDoc,
+	doc,
+	updateDoc,
+	deleteDoc,
+	getDocs,
+	setDoc,
+} from "firebase/firestore";
 import {
 	createUserWithEmailAndPassword,
 	sendPasswordResetEmail,
@@ -20,7 +31,11 @@ export function AuthProvider({ children }) {
 	const [loading, setLoading] = useState(true);
 
 	function signup(email, password) {
-		return createUserWithEmailAndPassword(auth, email, password);
+		return createUserWithEmailAndPassword(auth, email, password).then(
+			(user) => {
+				setDoc(doc(db, "users", user.user.uid), { email: email });
+			}
+		);
 	}
 
 	function login(email, password) {

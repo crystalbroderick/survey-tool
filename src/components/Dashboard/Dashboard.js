@@ -3,7 +3,7 @@ import { Button, Alert } from "@mui/material";
 import React, { useState } from "react";
 import { Card, Container } from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useAuth } from "../Contexts/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function Dashboard() {
 	const [error, SetError] = useState("");

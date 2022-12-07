@@ -1,16 +1,18 @@
 import { Alert } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
-import { useAuth } from "../Contexts/AuthContext";
-import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
+
 	const passwordConfirmRef = useRef();
 	const { signup } = useAuth();
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -19,16 +21,11 @@ export default function Signup() {
 			return setError("Passwords do not match");
 		}
 
-		try {
-			setError("");
-			setLoading(true);
+		// create auth user with email and password
+		await signup(emailRef.current.value, passwordRef.current.value);
 
-			await signup(emailRef.current.value, passwordRef.current.value);
-		} catch {
-			setError("Failed to create an account");
-		}
 		setLoading(false);
-		Navigate("/dashboard");
+		navigate("/dashboard");
 	}
 
 	return (
@@ -58,7 +55,7 @@ export default function Signup() {
 									required
 								/>
 							</Form.Group>
-							<Button disabled={loading} className="w-100" type="submit">
+							<Button disabled={loading} className="w-100 mt-3" type="submit">
 								Sign Up
 							</Button>
 						</Form>

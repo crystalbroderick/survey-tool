@@ -1,7 +1,7 @@
 import { Alert } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
-import { useAuth } from "../Contexts/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { Email } from "@mui/icons-material";
 
