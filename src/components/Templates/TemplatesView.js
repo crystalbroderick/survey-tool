@@ -13,7 +13,6 @@ export default function TemplatesView() {
 			setTemplates(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
 		};
 		getTemplates();
-		console.log(templates);
 	}, []);
 	return (
 		<>
@@ -25,14 +24,16 @@ export default function TemplatesView() {
 						<Card
 							//border="primary"
 							bg="neutral"
-							className="shadow p-3 mb-5 rounded"
+							className="shadow p-3 mb-5 rounded h-75"
 							key={template.id}
 						>
 							<Card.Body>
 								<Card.Title>{template.title}</Card.Title>
 								<Card.Text>{template.desc ? template.desc : null}</Card.Text>
+							</Card.Body>{" "}
+							<div className="d-flex align-items-end justify-content-end ">
 								<Link
-									className="btn btn-nscgreen"
+									className="btn btn-nscgreen "
 									to={`/template/${template.id}`}
 									state={{
 										title: template.title,
@@ -42,7 +43,7 @@ export default function TemplatesView() {
 								>
 									Use Template
 								</Link>
-							</Card.Body>
+							</div>
 						</Card>
 					</Col>
 				))}
