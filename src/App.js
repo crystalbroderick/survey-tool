@@ -10,7 +10,11 @@ import Header from "./components/Header";
 import Container from "react-bootstrap/Container";
 import TemplateEditor from "./components/templates/Editor";
 import Signup from "./components/auth/Signup";
-import { AuthProvider, useAuth } from "./components/context/AuthContext";
+import {
+	AuthContext,
+	AuthProvider,
+	useAuth,
+} from "./components/context/AuthContext";
 import Dashboard from "./components/dashboard/Dashboard";
 import Login from "./components/auth/Login";
 import { useEffect, useState } from "react";

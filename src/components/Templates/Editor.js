@@ -10,8 +10,10 @@ import SurveyData from "../../api/surveys.data";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useAuth } from "../context/AuthContext";
-import { Timestamp } from "firebase/firestore";
+import { useAuth, AuthContext } from "../context/AuthContext";
+import { addDoc, Timestamp, collection } from "firebase/firestore";
+import db from "../../firebase.config.js";
+import "firebase/firestore";
 
 function TemplateEditor() {
 	const { id } = useParams();
@@ -23,7 +25,6 @@ function TemplateEditor() {
 	const [template, setTemplate] = useState({});
 	const navigate = useNavigate();
 	const { currentUser } = useAuth();
-
 	const [page, setPage] = useState(template.title);
 
 	// const [newSurvey, setNewSurvey] = useState({
@@ -43,13 +44,11 @@ function TemplateEditor() {
 	}
 
 	const updateQuestion = (id, name, value) => {
-		console.log("update: ", id, value);
 		const item = questions.find((x) => x.id === id);
 		const updatedItem = { ...item, [name]: value }; // update question / type
 		const newQuestion = [...questions];
 		newQuestion.splice(questions.indexOf(item), 1, updatedItem);
 		setQuestions(newQuestion);
-		console.log(questions);
 	};
 
 	const handleSubmit = async (e) => {
@@ -72,21 +71,38 @@ function TemplateEditor() {
 			addSurvey();
 		}
 	};
-	const addSurvey = async () => {
-		try {
-			const newSurvey = {
-				title: template.title,
-				desc: template.desc,
-				user: currentUser.uid,
-				created: Timestamp.now(),
-			};
-			const docRef = await SurveyData.addSurvey(newSurvey);
-			console.log("Document written with ID: ", docRef.id);
-			navigate("/surveys");
-		} catch (e) {
-			console.log("Error creating new survey ", e);
+
+	async function addSurvey() {
+		const surveysRef = collection(db, "surveys");
+		const newSurvey = {
+			title: template.title,
+			desc: template.desc,
+			uid: currentUser.uid,
+			created: Timestamp.now(),
+		};
+		//create new survey
+		const docRef = await addDoc(surveysRef, newSurvey);
+
+		if (docRef) {
+			//add questions to survey
+			await questions
+				.forEach((doc) => {
+					console.log("docs:", doc);
+					const questionsRef = collection(
+						db,
+						"surveys",
+						docRef.id,
+						"questions"
+					);
+					const ref = addDoc(questionsRef, {
+						title: doc.title,
+						type: doc.type,
+					});
+					navigate("/surveys");
+				})
+				.catch((e) => console.log("Error adding questions..", e));
 		}
-	};
+	}
 
 	useEffect(() => {
 		const getTemplateInfo = async () => {
@@ -177,12 +193,12 @@ export default TemplateEditor;
 function QuestionItem({ id, qNum, question, updateQuestion }) {
 	const [questionTitle, setQuestionTitle] = useState("");
 
-	const handleQuestion = (name, value) => {
-		if (name === "title") {
-			setQuestionTitle(value);
-		}
-		updateQuestion(id, name, questionTitle);
+	const handleQuestion = (e) => {
+		setQuestionTitle(e.target.value);
 	};
+	useEffect(() => {
+		updateQuestion(id, "title", questionTitle);
+	}, [questionTitle]);
 
 	return (
 		<Form.Group className="mb-3" controlId={`question` + qNum}>
@@ -190,7 +206,7 @@ function QuestionItem({ id, qNum, question, updateQuestion }) {
 			<Form.Control
 				type="input"
 				value={questionTitle ? questionTitle : question}
-				onChange={(e) => handleQuestion("title", e.target.value)}
+				onChange={handleQuestion}
 			/>
 		</Form.Group>
 	);

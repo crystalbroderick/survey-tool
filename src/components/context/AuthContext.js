@@ -20,7 +20,7 @@ import {
 } from "firebase/auth";
 import { Navigate } from "react-router-dom";
 
-const AuthContext = React.createContext();
+export const AuthContext = React.createContext();
 
 export function useAuth() {
 	return useContext(AuthContext);

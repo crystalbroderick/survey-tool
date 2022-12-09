@@ -31,7 +31,7 @@ export default function TemplatesView() {
 								<Card.Title>{template.title}</Card.Title>
 								<Card.Text>{template.desc ? template.desc : null}</Card.Text>
 							</Card.Body>{" "}
-							<div className="d-flex align-items-end justify-content-end ">
+							<div className="d-flex justify-content-end align-items-end">
 								<Link
 									className="btn btn-nscgreen "
 									to={`/template/${template.id}`}
