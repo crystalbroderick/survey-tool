@@ -27,15 +27,6 @@ function TemplateEditor() {
 	const { currentUser } = useAuth();
 	const [page, setPage] = useState(template.title);
 
-	// const [newSurvey, setNewSurvey] = useState({
-	// 	// auto generate id
-	// 	id: 'question1id',
-
-	// });
-	// function handleInfoChange(e) {
-	// 	const { name, value } = e.target;
-	// 	setNewSurvey((curr) => ({ ...curr, [name]: value }));
-	// }
 	function handleInfoChange(e) {
 		const { name, value } = e.target;
 		setTemplate((curr) => {
@@ -167,9 +158,9 @@ function TemplateEditor() {
 										id={question.id}
 										qNum={i + 1}
 										question={question.title}
-										//type={question.type}
+										type={question.type}
 										updateQuestion={updateQuestion}
-										//updateResType={handleTypeChange}
+										key={question.id}
 									></QuestionItem>
 								</div>
 							))}
@@ -177,6 +168,7 @@ function TemplateEditor() {
 						<Button
 							variant="primary"
 							type="submit"
+							className="m-3"
 							onSubmit={(e) => handleSubmit(e)}
 						>
 							Submit
@@ -190,76 +182,36 @@ function TemplateEditor() {
 
 export default TemplateEditor;
 
-function QuestionItem({ id, qNum, question, updateQuestion }) {
-	const [questionTitle, setQuestionTitle] = useState("");
-
-	const handleQuestion = (e) => {
-		setQuestionTitle(e.target.value);
+function QuestionItem({ id, qNum, question, updateQuestion, type }) {
+	const handleQuestion = (e, name) => {
+		updateQuestion(id, name, e.target.value);
 	};
-	useEffect(() => {
-		updateQuestion(id, "title", questionTitle);
-	}, [questionTitle]);
 
 	return (
-		<Form.Group className="mb-3" controlId={`question` + qNum}>
-			<Form.Label className="h4 text-darkblue">Question {qNum}</Form.Label>
-			<Form.Control
-				type="input"
-				value={questionTitle ? questionTitle : question}
-				onChange={handleQuestion}
-			/>
-		</Form.Group>
+		<>
+			<Form.Group className="mb-3" controlId={`question` + qNum}>
+				<Form.Label className="h4 text-darkblue">Question {qNum}</Form.Label>
+				<Form.Control
+					type="input"
+					value={question}
+					onChange={(e) => handleQuestion(e, "title")}
+				/>
+			</Form.Group>
+			<Form.Group controlId="type-dropdown">
+				<Form.Label className="text-darkblue ms-1 ">Response Type</Form.Label>
+				<Form.Select
+					value={type}
+					aria-label="Response Type Drop Down"
+					onChange={(e) => handleQuestion(e, "type")}
+				>
+					<option value="rating">Rating</option>
+					<option value="short">Short Text</option>
+					<option value="long">Text Area</option>
+					<option value="hours">Hours</option>
+					<option value="binary">Binary</option>
+					<option value="choices">Checkboxes</option>
+				</Form.Select>
+			</Form.Group>
+		</>
 	);
 }
-
-// {/* <Form.Label className="text-darkblue ms-1 ">
-// 	Response Type
-// </Form.Label>
-// <Form.Select
-// 	value={question.type}
-// 	aria-label="Response Type Drop Down"
-// 	onChange={(e) => handleTypeChange(question.id, e)}
-// >
-// 	{" "}
-// 	<option
-// 		value="rating"
-// 		name="type"
-// 		onChange={(e) => handleTypeChange(question.id, e)}
-// 	>
-// 		Rating
-// 	</option>
-// 	<option
-// 		value="short"
-// 		name="type"
-// 		onChange={(e) => handleTypeChange(question.id, e)}
-// 	>
-// 		Short Text
-// 	</option> */}
-// 	{/* <option
-// 		value="long"
-// 		name="type"
-// 		onChange={(e) => handleTypeChange(question.id, e)}
-// 	>
-// 		Text Area
-// 	</option>
-// 	<option
-// 		value="hours"
-// 		name="type"
-// 		onChange={(e) => handleTypeChange(question.id, e)}
-// 	>
-// 		Hours
-// 	</option>
-// 	<option
-// 		value="binary"
-// 		name="type"
-// 		onChange={(e) => handleTypeChange(question.id, e)}
-// 	>
-// 		Binary
-// 	</option>
-// 	<option
-// 		value="choices"
-// 		name="type"
-// 		onChange={(e) => handleTypeChange(question.id, e)}
-// 	>
-// 		Checkboxes
-// 	</option> */}
