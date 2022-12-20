@@ -36,7 +36,6 @@ function Header({ isLoggedIn }) {
 					</Navbar.Brand>
 					{isLoggedIn && currentUser ? (
 						<Nav className="justify-content-end">
-							<Nav.Link href="/home">Home</Nav.Link>
 							<Nav.Link as={Link} to="/surveys">
 								Surveys
 							</Nav.Link>

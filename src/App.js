@@ -1,27 +1,18 @@
-import Home from "./components/Home/Home";
-import {
-	BrowserRouter as Router,
-	Route,
-	Routes,
-	useNavigate,
-} from "react-router";
+import { BrowserRouter as Router, Route, Routes } from "react-router";
 import TemplatesView from "./components/templates/TemplatesView";
 import Header from "./components/Header";
 import Container from "react-bootstrap/Container";
 import TemplateEditor from "./components/templates/Editor";
 import Signup from "./components/auth/Signup";
-import {
-	AuthContext,
-	AuthProvider,
-	useAuth,
-} from "./components/context/AuthContext";
+import { AuthProvider } from "./components/context/AuthContext";
 import Dashboard from "./components/dashboard/Dashboard";
 import Login from "./components/auth/Login";
 import { useEffect, useState } from "react";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import UpdateProfile from "./components/updateProfile/UpdateProfile";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import "./custom.scss";
+import Surveys from "./components/surveys/Surveys";
 
 function App() {
 	const auth = getAuth();
@@ -52,7 +43,7 @@ function App() {
 				<Header isLoggedIn={isLoggedIn}></Header>
 				<Container className="mt-5">
 					<Routes>
-						<Route path="/" element={<Dashboard />} />
+						<Route path="/" element={<Surveys />} />
 						<Route path="/signup" element={<Signup />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/forgot-password" element={<ForgotPassword />}></Route>
@@ -60,6 +51,8 @@ function App() {
 						<Route path="/update-profile" element={<UpdateProfile />} />
 						<Route path="/templates" element={<TemplatesView />} />
 						<Route path="/template/:id" element={<TemplateEditor />} />
+						<Route path="/surveys/:uid" element={<Surveys />} />
+						<Route path="/surveys/" element={<Surveys />} />
 						<Route
 							path="*"
 							element={

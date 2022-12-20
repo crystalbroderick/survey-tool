@@ -76,6 +76,9 @@ function TemplateEditor() {
 		if (template.desc === "" || typeof template.desc === "undefined") {
 			allErrors.desc = "Please enter a description";
 		}
+
+		// TODO : checks questions for undefined values
+		//
 		const isEmpty = Object.keys(allErrors).length === 0;
 		if (!isEmpty) {
 			setErrors(allErrors);
@@ -108,10 +111,11 @@ function TemplateEditor() {
 						docRef.id,
 						"questions"
 					);
+
 					const ref = addDoc(questionsRef, {
 						title: doc.title,
 						type: doc.type,
-						options: doc.options,
+						options: doc.options || "",
 					});
 					navigate("/surveys");
 				})

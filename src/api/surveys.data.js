@@ -9,9 +9,12 @@ import {
 	getDocs,
 	writeBatch,
 	setDoc,
+	where,
+	query,
 } from "firebase/firestore";
 
 const surveysRef = collection(db, "surveys");
+
 //const userSurveyRef = collection(db, "users", currentUser, "surveys");
 
 class SurveyData {
@@ -37,6 +40,23 @@ class SurveyData {
 	addSurveyQuestions = (id, questions) => {
 		const q = collection(db, "surveys", id, "questions");
 		return;
+	};
+
+	// Get all surveys in database
+	getAllSurveys = () => {
+		console.log(surveysRef);
+		return getDocs(surveysRef);
+	};
+
+	// Get user specific surveys
+	getUserSurveys = (uid) => {
+		return getDocs(query(surveysRef, where("uid", "==", uid)));
+	};
+
+	// Delete survey
+	deleteSurvey = (id) => {
+		const surveyDoc = doc(db, "surveys", id);
+		return deleteDoc(surveyDoc);
 	};
 
 	// updateTemplate = (id, updatedTemplate) => {
