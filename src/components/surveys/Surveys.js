@@ -5,12 +5,15 @@ import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Modal } from "react-bootstrap";
 
 function Surveys() {
 	const [surveys, setSurveys] = useState([]);
 	const { currentUser } = useAuth();
 	const uid = currentUser.uid;
+
+	const previewSurvey = (e) => {
+		console.log(e.target.value);
+	};
 
 	async function deleteSurvey(id) {
 		// Remove from database
@@ -30,16 +33,20 @@ function Surveys() {
 			setSurveys(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
 		};
 		getSurveys();
-	}, []);
+	}, [uid]);
 	return (
 		<div>
 			<h1 className="page-title">My Surveys</h1>
 			<Link to="/templates" className="btn btn-primary mb-3">
 				Add Survey
 			</Link>
-			<ListGroup className="p-2">
+			<ListGroup className="p-2 ">
 				{surveys.map((item) => (
-					<ListGroup.Item key={item.id} className="p-3">
+					<ListGroup.Item
+						key={item.id}
+						bg="neutral"
+						className="p-3 shadow p-3 mb-5 rounded h-7"
+					>
 						<Row>
 							<Col>
 								<div className="fw-bold">{item.title}</div>
@@ -50,8 +57,15 @@ function Surveys() {
 							<Col
 								xs
 								lg="2"
-								className="d-flex justify-content-end align-items-end"
+								className="d-flex justify-content-between align-items-end"
 							>
+								<Button
+									variant="primary"
+									value={item.id}
+									onClick={(e) => previewSurvey(e)}
+								>
+									Edit
+								</Button>
 								<Button variant="danger" onClick={() => deleteSurvey(item.id)}>
 									Delete
 								</Button>
@@ -66,24 +80,3 @@ function Surveys() {
 }
 
 export default Surveys;
-
-function DeleteModal({ id, title, show, handleShow }) {
-	return (
-		<Modal show={show} onHide={handleShow}>
-			<Modal.Header closeButton>
-				<Modal.Title>Delete Survey: {title}</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
-				Are you sure you want to delete {title}? This action cannot be undone!
-			</Modal.Body>
-			<Modal.Footer>
-				<Button variant="secondary" onClick={handleShow}>
-					Close
-				</Button>
-				<Button variant="danger" onClick={handleShow}>
-					Delete
-				</Button>
-			</Modal.Footer>
-		</Modal>
-	);
-}
