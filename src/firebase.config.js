@@ -1,12 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-
-
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD_jdtKfxF0zStDJZEAu9wXM8w28igHwic",
+  apiKey: process.app.FIREBASE_API_KEY,
   authDomain: "survey-tool-5afd9.firebaseapp.com",
   projectId: "survey-tool-5afd9",
   storageBucket: "survey-tool-5afd9.appspot.com",
@@ -19,4 +16,3 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export default getFirestore();
-
